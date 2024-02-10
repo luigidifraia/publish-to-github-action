@@ -52,19 +52,19 @@ fi
 
 # Initialize git
 remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-git config http.sslVerify "${SSL_VERIFY}" || { echo "error: Failed to set http.sslVerify in git config"; exit 1; }
-git config user.name "${NAME}" || { echo "error: Failed to set user.name in git config"; exit 1; }
-git config user.email "${EMAIL}" || { echo "error: Failed to set user.email in git config"; exit 1; }
-git remote add publisher "${remote_repo}" || { echo "error: Failed to add remote repository"; exit 1; }
+git config http.sslVerify "${SSL_VERIFY}" || { echo "error: Failed to set http.sslVerify in git config"; }
+git config user.name "${NAME}" || { echo "error: Failed to set user.name in git config"; }
+git config user.email "${EMAIL}" || { echo "error: Failed to set user.email in git config"; }
+git remote add publisher "${remote_repo}" || { echo "error: Failed to add remote repository"; }
 git show-ref # Useful for debugging
 git branch --verbose
 
 # Install LFS hooks
-git lfs install || { echo "error: Failed to install LFS hooks"; exit 1; }
+git lfs install || { echo "error: Failed to install LFS hooks"; }
 
 # Publish any new files
-git checkout ${BRANCH_NAME} || { echo "error: Failed to checkout branch"; exit 1; }
-git add -A ${ONLY_TRACKED} || { echo "error: Failed to add files to staging"; exit 1; }
-git commit -m "${COMMIT_MESSAGE}" ${NO_VERIFY} || { echo "error: Commit failed"; exit 1; }
-git pull --rebase publisher ${BRANCH_NAME} || { echo "error: Failed to pull changes from remote"; exit 1; }
-git push publisher ${BRANCH_NAME} || { echo "error: Failed to push changes to remote"; exit 1; }
+git checkout ${BRANCH_NAME} || { echo "error: Failed to checkout branch"; }
+git add -A ${ONLY_TRACKED} || { echo "error: Failed to add files to staging"; }
+git commit -m "${COMMIT_MESSAGE}" ${NO_VERIFY} || { echo "error: Commit failed"; }
+git pull --rebase publisher ${BRANCH_NAME} || { echo "error: Failed to pull changes from remote"; }
+git push publisher ${BRANCH_NAME} || { echo "error: Failed to push changes to remote"; }
